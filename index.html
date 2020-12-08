@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Coding Quiz</title>
+  </head>
+
+  <body>
+    <div class="wrapper">
+        <span id="timer"></span>
+        <button id="start">Start</button>
+        <div id="one" hidden>
+            <h3>Commonly used data types DO NOT include:</h3>
+            <ul>
+              <li><button id="one_one">strings</button></li>
+              <li><button id="one_two">booleans</button></li>
+              <li><button id="one_three">numbers</button></li>
+              <li><button id="one_four">alerts</button></li>
+            </ul>
+        </div>
+        <div id="two" hidden>
+            <h3>The condition in an if / else statement is enclosed within ____.</h3>
+            <ul>
+              <li><button id="two_one">quotes</button></li>
+              <li><button id="two_two">curly brackets</button></li>
+              <li><button id="two_three">parentheses</button></li>
+              <li><button id="two_four">square brackets</button></li>
+            </ul>
+        </div>
+        <div id="three" hidden>
+          <h3>String values must be enclosed within ____ when being assigned to variables.</h3>
+          <ul>
+            <li><button id="three_one">commas</button></li>
+            <li><button id="three_two">curly brackets</button></li>
+            <li><button id="three_three">quotes</button></li>
+            <li><button id="three_four">parentheses</button></li>
+          </ul>
+        </div>
+        <div id="score" hidden>
+            <h2 id="scoreValue"></h2>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        var score = 0;
+        var transition = function(from, to) {
+          $(from).hide();
+          $(to).show();
+        }
+
+        var incrementScore = function() {
+          score += 1;
+        }
+
+        var displayScore = function() {
+          $("#scoreValue").text("Score: " + score);
+          $("#timer").hide();
+          transition("#three", "#score");
+        }
+
+        var setUpTimer = function() {
+          var timeLeft = 10;
+          setInterval(function() {
+            timeLeft -= 1;
+            if (timeLeft < 0) {
+              $("#one").hide();
+              $("#two").hide();
+              displayScore();
+            }
+            $("#timer").html(timeLeft);
+          }, 1000);
+        }
+
+        $("#start").click(function() {
+          setUpTimer();
+          transition("#start", "#one");
+        });
+        $( "button[id^='one_']" ).click(function() {
+          transition("#one", "#two");
+        })
+        $( "button[id^='two_']" ).click(function() {
+          transition("#two", "#three");
+        })
+        $( "button[id^='three_']" ).click(displayScore)
+
+        $("#one_four").click(incrementScore);
+        $("#two_two").click(incrementScore);
+        $("#three_three").click(incrementScore);
+    </script>
+  </body>
+</html>
